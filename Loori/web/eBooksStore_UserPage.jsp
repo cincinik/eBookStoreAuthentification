@@ -1,6 +1,6 @@
 <!--
 © 2017 Lori, Inc. All rights reserved.
-The Index Page of the eBooks store.
+The main page for regular users.
 -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

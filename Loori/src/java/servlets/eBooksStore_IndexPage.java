@@ -1,6 +1,6 @@
 /*
-    Document   : Index.java
-    Author     : gheorgheaurelpacurar
+    Document   : The Index servlet
+    Author     : gheorgheaurelpacurar & Lori
     Copyright  : gheorgheaurelpacurar
  */
 package servlets;
@@ -20,11 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author gheorgheaurelpacurar
+ * @author gheorgheaurelpacurar & Lori
  * Servlet class implements authentication and authorization process for eBooksStore
  * java web application. Session variable "validUser" is used to keep the value
  * of an authenticated user. The value should be true. If the variable has value false or 
- * not exist in session the user is unauthorized.
+ * not exist in session the user is unauthorized and the page redirects to initial page.
  * 
  */
 public class eBooksStore_IndexPage extends HttpServlet {
@@ -42,7 +42,7 @@ public class eBooksStore_IndexPage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        // read username and password sent from the JSP
+        // read username and password sent from the JSP input fields
         String u = request.getParameter("authenticationpage_username");
         String p = request.getParameter("authenticationpage_password");
         // Try to create a connection and test if the user exists
@@ -59,9 +59,11 @@ public class eBooksStore_IndexPage extends HttpServlet {
             Class driverClass = Class.forName(driver);
             connection = DriverManager.getConnection(url, user, password);
             statement = connection.createStatement();
+            //Match input user and password with database records
             String query = "SELECT NAME, PASSWORD, ROLE FROM USERS WHERE NAME = '"+u+"' AND PASSWORD = '"+p+"'";
             resultSet = statement.executeQuery(query);
             boolean resultSetHasRows = resultSet.next(); 
+            //If there are matching username-password pairs, proceed with the authentification process
             if (resultSetHasRows)
             {
                 // save as actualUser variable the username
@@ -71,6 +73,7 @@ public class eBooksStore_IndexPage extends HttpServlet {
                 request.getSession().setAttribute("actualUserRole", role);
                 // create a variable to keep the authenticated user
                 request.getSession().setAttribute("validUser", true);
+                // check if valid user is admin or regular user and redirrect him to corresponding page
                 if (role.equalsIgnoreCase("admin")){
                     request.getRequestDispatcher("./eBooksStore_AdminPage.jsp").forward(request, response);
                 }

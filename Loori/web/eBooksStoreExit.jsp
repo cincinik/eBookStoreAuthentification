@@ -1,8 +1,7 @@
-<%-- 
-    Document   : eBooksStoreExit.jsp
-    Author     : gheor
-    Copyright  : gheor
---%>
+<!--
+© 2017 Lori, Inc. All rights reserved.
+The Logout page - redirects to initial page
+-->
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
